@@ -119,16 +119,17 @@ func (g *Game) SetTile(i, j uint8, c Color) {
 	g.Players[i].Patternline[j].Size = 0
 	g.Players[i].Patternline[j].Color = EMPTY
 
-	for k := range 5 {
+	for k := range uint8(5) {
 		if g.Players[i].Wall[j][k].String() == "OPAQUE "+c.String() {
 			g.Players[i].Wall[j][k] = c
 			//score points here
+			g.Players[i].CountPoints(j, k)
 		}
 	}
 
 }
 
-func (g *Game) setup() {
+func (g *Game) Setup() {
 	// set tile and score points score points
 	for i := range uint8(PLAYERCOUNT) {
 		for j := range uint8(5) {

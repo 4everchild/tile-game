@@ -8,7 +8,7 @@ func AdvanceGame(g Game) (Game, error) {
 	g1 := g
 	switch g1.State {
 	case SETUP:
-		g1.setup()
+		g1.Setup()
 	case WAITP1:
 		//g1.HandleMove(0,)
 	case WAITP2:

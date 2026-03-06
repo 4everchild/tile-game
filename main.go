@@ -63,6 +63,10 @@ func main() {
 	r.Post("/games", func(w http.ResponseWriter, r *http.Request) {
 		id := gm.CreateGame()
 		g := gm.Games[id]
+		//
+
+		//
+		gm.Games[id] = g
 		fmt.Println("created game: ", id)
 		fmt.Println(unsafe.Sizeof(g))
 

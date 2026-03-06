@@ -32,6 +32,25 @@ var ColorValue = map[Color]string{
 	OPAQUE_GREEN:  "OPAQUE GREEN",
 }
 
+func (c Color) IsTile() bool {
+	switch c {
+	case BLUE:
+		return true
+	case YELLOW:
+		return true
+	case RED:
+		return true
+	case BLACK:
+		return true
+	case GREEN:
+		return true
+	case FIRST:
+		return true
+	default:
+		return false
+	}
+}
+
 func (s Color) String() string {
 	return ColorValue[s]
 }
