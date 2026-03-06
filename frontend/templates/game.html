@@ -1,0 +1,42 @@
+{{define "game"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="drawing-container">
+    {{template "factory_displays" .FactoryDisplays}}
+    {{template "center" .Center}}
+</div>
+
+<div class="drawing-container">
+    {{template "sack" .Sack}}
+    <div class="filler">{{.State}}</div>
+    {{template "discarded" .Discarded}}
+    {{template "seed" .Seed}}
+    
+</div>
+
+<div class="players-container">
+    {{range $i, $player := $.Players}}
+        <div class="player">
+            <div class="flex-container-column">
+                <div class="flex-container-row">
+                    <div class="filler"></div>
+                    <div class="player-name">PLAYER {{add $i 1}}</div>
+                    <div class="filler"></div>
+                </div>
+                {{template "player" .}}
+            </div>
+        </div>
+    {{end}}
+</div>
+
+</body>
+</html>
+{{end}}

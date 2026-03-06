@@ -1,0 +1,234 @@
+.factory-display-container {
+    display: flex;          /* arrange children in a row */
+    flex-direction: row;    /* left-to-right layout */
+    flex-wrap: wrap;
+    
+    gap: 20px;              /* spacing between factory displays */
+    border: 1px solid #333;
+    padding: 10px;
+
+
+    width: fit-content;  /* shrink to fit content horizontally */
+    
+    height: max-content; /* shrink to fit content vertically */
+}
+
+.factory-display {
+    display: grid;
+    grid-template-columns: repeat(2, auto); /* 2 columns, 50px each */
+    grid-template-rows: repeat(2, auto);    /* 2 rows, 50px each */
+    gap: 10px;                              /* spacing between tiles */
+    border: 1px solid #333;
+    padding: 10px;
+    
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+
+.center-container {
+    display: flex;          /* arrange children in a row */
+    flex-direction: row;    /* left-to-right layout */
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 20px;              /* spacing between factory displays */
+
+    border: 1px solid #333;
+    padding: 10px;
+
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+.center {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 50px); */ /* 2 columns, 50px each */
+    /*grid-template-rows: repeat(2, 50px);*/    /* 2 rows, 50px each */
+    gap: 10px;                              /* spacing between tiles */
+    border: 1px solid #333;
+    padding: 10px;
+    
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+
+.sack-container {
+    display: flex;          /* arrange children in a row */
+    flex-direction: row;    /* left-to-right layout */
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 20px;              /* spacing between factory displays */
+
+    border: 1px solid #333;
+    padding: 10px;
+
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+.sack {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 50px); */ /* 2 columns, 50px each */
+    /*grid-template-rows: repeat(2, 50px);*/    /* 2 rows, 50px each */
+    gap: 10px;                              /* spacing between tiles */
+    border: 1px solid #333;
+    padding: 10px;
+    
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+.drawing-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.players-container {
+    display: grid;
+    grid-template-columns: repeat(2,auto); /* 5 columns, 50px each */
+    grid-template-rows: repeat(2,auto);    /* 5 rows, 50px each */
+    gap: 30px;
+    border: 1px black;
+    margin: 20px; 
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.player {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    align-items: flex-end;
+    width: fit-content;
+    height: fit-content;
+}
+
+.patternlines-container {
+    display: flex ;
+    flex-direction: column;
+    align-items: flex-end;
+
+    border: 1px black;
+
+    width: fit-content;  /* shrink to fit content horizontally */
+    height: fit-content; /* shrink to fit content vertically */
+}
+.patternline-container {
+    display: flex;          /* arrange children in a row */
+    flex-direction: row-reverse;    /* left-to-right layout */
+    flex-wrap: nowrap;
+    gap: 20px;              /* spacing between factory displays */
+
+    border: 1px solid #333;
+    padding: 10px;
+
+    width: fit-content;  /* shrink to fit content horizontally */
+    height: fit-content; /* shrink to fit content vertically */
+}
+
+.patternline-container:has(+ .patternline-container ) {
+  border-bottom: none;  /* only separator lines */
+}
+
+
+.wall {
+    display: grid;
+    grid-template-columns: repeat(5, auto); /* 5 columns, 50px each */
+    grid-template-rows: repeat(5, auto);    /* 5 rows, 50px each */
+    gap: 19px;                              /* spacing between tiles */
+    border: 1px solid #333;
+    padding: 15px;
+
+    /*
+    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,0.2);\
+    */
+    
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+
+.tile {
+    width: 50px;  /* shrink to fit content horizontally */
+    height: 50px; /* shrink to fit content vertically */
+    border-radius: 8%;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    justify-content: center; /* horizontally center the grid */
+    align-content: center;   /* vertically center the grid */
+}
+
+.flex-container-row{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.flex-container-column{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.floor{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    gap: 20px;
+    padding: 10px;
+    max-width: fit-content;
+    max-height: fit-content;
+}
+
+.points {
+  font-size: 2.2rem;
+  font-weight: 900;
+  /*
+  font-family: 'Arial Black', sans-serif;
+  color: #00ffcc;
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);*/
+}
+
+
+.player{
+    border: 5px solid gray;
+    padding: 20px;
+}
+
+.rl{
+    flex-direction: row-reverse;
+}
+
+.filler{flex-grow: 1;}
+
+.OPAQUE {opacity: 10%;}
+
+.BLUE { background-color: blue; }
+.YELLOW { background-color: gold; }
+.RED { background-color: red; }
+.BLACK { background-color: black; }
+.GREEN{ background-color: green; }
+.EMPTY{background-color: rgba(0, 0, 0); opacity: 5%; }
+
