@@ -10,3 +10,11 @@ func contains(slice []uint8, v uint8) bool {
 	}
 	return false
 }
+
+func min(a, b uint8) uint8 {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}

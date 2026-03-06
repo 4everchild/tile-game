@@ -68,10 +68,6 @@ func main() {
 
 		url := fmt.Sprintf("/games/%d", id)
 
-		g1, err := game.AdvanceGame(g)
-		check(err)
-		gm.Games[id] = g1
-
 		http.Redirect(w, r, url, http.StatusSeeOther)
 
 	})

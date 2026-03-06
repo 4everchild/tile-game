@@ -10,6 +10,7 @@ func AdvanceGame(g Game) (Game, error) {
 	case SETUP:
 		g1.setup()
 	case WAITP1:
+		//g1.HandleMove(0,)
 	case WAITP2:
 	case WAITP3:
 	case WAITP4:

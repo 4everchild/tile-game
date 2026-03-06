@@ -18,15 +18,22 @@ func NewGameManager() *GameManager {
 	}
 }
 
-func (m *GameManager) CreateGame() uint64 {
+func (m *GameManager) GenerateId() uint64 {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-
 	id := m.nextID
-	game := NewGame(id) // your constructor
-	m.Games[id] = game
 	m.nextID++
 	return id
+}
+
+func (m *GameManager) CreateGame() uint64 {
+	id := m.GenerateId()
+	game := NewGame(id)
+	game.setup()
+	m.Games[id] = game
+
+	return id
+
 }
 
 func (m *GameManager) GetGame(id uint64) (Game, error) {

@@ -122,12 +122,14 @@ func (g *Game) SetTile(i, j uint8, c Color) {
 	for k := range 5 {
 		if g.Players[i].Wall[j][k].String() == "OPAQUE "+c.String() {
 			g.Players[i].Wall[j][k] = c
+			//score points here
 		}
 	}
+
 }
 
 func (g *Game) setup() {
-	// score points
+	// set tile and score points score points
 	for i := range uint8(PLAYERCOUNT) {
 		for j := range uint8(5) {
 			size := g.Players[i].Patternline[j].Size
@@ -140,19 +142,16 @@ func (g *Game) setup() {
 
 	// find first player and subtract penalties from floorline
 	var firstPlayer int = 0
+
 	for i := 0; i < PLAYERCOUNT; i++ {
 		for j := 0; j < 7; j++ {
-			switch g.Players[i].Floorline[j] {
-			case EMPTY:
-				//break
-			case FIRST:
+			if g.Players[i].Floorline[j] == EMPTY {
+				break
+			}
+			if g.Players[i].Floorline[j] == FIRST {
 				firstPlayer = j
 			}
-			if g.Players[i].Points < FloorLinePenalties[j] {
-				g.Players[i].Points -= FloorLinePenalties[j]
-			} else {
-				g.Players[i].Points = 0
-			}
+			g.Players[i].Points -= min(FloorLinePenalties[j], g.Players[i].Points)
 		}
 	}
 
