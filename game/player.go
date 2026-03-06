@@ -45,12 +45,9 @@ func (p *Player) PlaceTileWall(i, j uint8) {
 }
 
 func (p *Player) CountPoints(y, x uint8) {
-	fmt.Printf("counting points for placements in (%d,%d)\n", x, y)
 	var r, l, u, d uint8 = 0, 0, 0, 0
-	//p.Points = r + l + u + d
 	for i := int8(x + 1); i < 5; i++ {
 		if p.Wall[y][i].IsTile() {
-			fmt.Println("r")
 			r++
 		} else {
 			break
@@ -58,7 +55,6 @@ func (p *Player) CountPoints(y, x uint8) {
 	}
 	for i := int8(x - 1); i >= 0; i-- {
 		if p.Wall[y][i].IsTile() {
-			fmt.Println("l")
 			l++
 		} else {
 			break
@@ -66,7 +62,6 @@ func (p *Player) CountPoints(y, x uint8) {
 	}
 	for i := int8(y + 1); i < 5; i++ {
 		if p.Wall[i][x].IsTile() {
-			fmt.Println("d")
 			d++
 		} else {
 			break
@@ -74,13 +69,11 @@ func (p *Player) CountPoints(y, x uint8) {
 	}
 	for i := int8(y - 1); i >= 0; i-- {
 		if p.Wall[i][x].IsTile() {
-			fmt.Println("u")
 			u++
 		} else {
 			break
 		}
 	}
-	fmt.Printf("r: %d\nl: %d\nu: %d\nd: %d\n", r, l, u, d)
 
 	if l+r+u+d == 0 {
 		p.Points += 1
