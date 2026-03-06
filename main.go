@@ -31,22 +31,6 @@ func MakeNewGame(seed uint64) game.Game {
 func main() {
 
 	gm := game.NewGameManager()
-	//fmt.Println(gm)
-	/*
-		g := game.NewGame(1)
-		g.FactoryDisplays[0].A = game.RED
-		g.FactoryDisplays[0].B = game.BLACK
-		g.FactoryDisplays[0].C = game.RED
-		g.FactoryDisplays[0].D = game.BLUE
-
-		g.Center.RED = 5
-		g.Center.BLUE = 3
-
-		err := g.Players[0].SetPatternline(3, 1, game.RED)
-		check(err)
-
-		g.Players[0].PlaceTileWall(1, 1)
-	*/
 
 	tmpl := template.Must(template.New("game").
 		Funcs(template.FuncMap{
@@ -97,10 +81,6 @@ func main() {
 		id, _ := strconv.ParseUint(idStr, 10, 64)
 
 		g := gm.Games[id]
-		/*
-			g1, err := game.AdvanceGame(g)
-			check(err)
-		*/
 
 		err1 := tmpl.ExecuteTemplate(w, "game", g)
 		check(err1)
@@ -110,12 +90,6 @@ func main() {
 
 	})
 
-	/*
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			err := tmpl.ExecuteTemplate(w, "game", g)
-			check(err)
-		})
-	*/
 	http.ListenAndServe(":3000", r)
 
 }
