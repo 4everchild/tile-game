@@ -17,7 +17,7 @@
 
 <div class="piles-container">
     {{template "sack" .Sack}}
-    <div class="filler">{{.State}}</div>
+    <div class="state {{.State}}">{{.State}}</div>
     {{template "discarded" .Discarded}}
     {{template "seed" .Seed}}
     

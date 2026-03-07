@@ -12,12 +12,12 @@ const (
 )
 
 var StateName = map[State]string{
-	SETUP:  "### setup ###",
-	END:    "### GAME ENDED ###",
-	WAITP1: "### waiting p1 ###",
-	WAITP2: "### waiting p2 ###",
-	WAITP3: "### waiting p3 ###",
-	WAITP4: "### waiting p4 ###",
+	SETUP:  "SETUP",
+	END:    "END",
+	WAITP1: "P1",
+	WAITP2: "P2",
+	WAITP3: "P3",
+	WAITP4: "P4",
 }
 
 func (s State) String() string {
