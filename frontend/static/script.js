@@ -21,7 +21,7 @@ function addTilesEventListeners(container, total){
         tile.addEventListener ("click",() =>{
             for (t of total){t.classList.remove("OPAQUE1")}
 
-            if (selected) for (t of selected){t.classList.remove("SELECTED")}
+            if (selected) for (t of total){t.classList.remove("SELECTED")}
             selected = container.querySelectorAll(".tile.BLINK")
             if (selected) for (t of selected){t.classList.add("SELECTED")}
             
