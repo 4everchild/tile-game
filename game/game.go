@@ -122,7 +122,6 @@ func (g *Game) SetTile(i, j uint8, c Color) {
 	for k := range uint8(5) {
 		if g.Players[i].Wall[j][k].String() == "OPAQUE "+c.String() {
 			g.Players[i].Wall[j][k] = c
-			//score points here
 			g.Players[i].CountPoints(j, k)
 		}
 	}

@@ -64,7 +64,8 @@ func main() {
 		id := gm.CreateGame()
 		g := gm.Games[id]
 		//
-
+		g.Center.RED = 5
+		g.Center.BLUE = 3
 		//
 		gm.Games[id] = g
 		fmt.Println("created game: ", id)

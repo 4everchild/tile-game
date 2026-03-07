@@ -93,6 +93,14 @@
     width: fit-content;
     height: fit-content;
 }
+.piles-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    width: fit-content;
+    height: fit-content;
+}
 
 .players-container {
     display: grid;
@@ -224,6 +232,7 @@
 .filler{flex-grow: 1;}
 
 .OPAQUE {opacity: 10%;}
+.OPAQUE1 {opacity: 40%;}
 
 .BLUE { background-color: blue; }
 .YELLOW { background-color: gold; }
@@ -232,3 +241,26 @@
 .GREEN{ background-color: green; }
 .EMPTY{background-color: rgba(0, 0, 0); opacity: 5%; }
 
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tile.BLINK {
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.tile.SELECTED {
+  animation: pulse 0.8s ease-in-out infinite;
+}
