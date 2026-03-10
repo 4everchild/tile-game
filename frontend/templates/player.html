@@ -32,34 +32,15 @@
 
 
 {{define "player"}}
-            <div class="flex-container-row">
-                <div class="filler"></div>
-                <div class="player-name"></div>
-                <div class="filler"></div>
-            </div>
-            <div class="flex-container-row">
-                {{template "patternlines" .Patternline}}
-                {{template "wall" .Wall}}
-            </div>
-            <div class="flex-container-row">
-                {{template "floor" .Floorline}}
-                <div class="filler"></div>
-                <div class="filler"></div>
-                <div class="points">{{.Points}}</div>
-                <div class="filler"></div>
-            </div>
+    <div class="flex-container-row">
+        {{template "patternlines" .Patternline}}
+        {{template "wall" .Wall}}
+    </div>
+    <div class="flex-container-row">
+        {{template "floor" .Floorline}}
+        <div class="filler"></div>
+        <div class="filler"></div>
+        <div class="points">{{.Points}}</div>
+        <div class="filler"></div>
+    </div>
 {{end}}
-
-{{/*
-            {{if $pl.Size eq 0}}{{end}}
-            {{if $pl.Size eq 1}}
-                <div class="tile {{$pl.Color}}"></div>
-            {{end}}
-            {{if $pl.Size eq 2}}
-                <div class="tile {{$pl.Color}}"></div>
-                <div class="tile {{$pl.Color}}"></div>
-            {{end}}
-            
-                <div class="tile {{$pl.Color}} OPAQUE"></div>
-                <div class="tile {{$pl.Color}}"></div>
-            */}}

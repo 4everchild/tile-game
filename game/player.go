@@ -6,19 +6,19 @@ import (
 )
 
 type Patternline struct {
-	Size  uint8
-	Color Color
+	Size  uint8 `json:"size"`
+	Color Color `json:"color"`
 }
 
 type Player struct {
-	Patternline [5]Patternline
-	Wall        [5][5]Color
-	Floorline   [7]Color
-	Points      uint8
+	Patternline [5]Patternline `json:"patternline"`
+	Wall        [5][5]Color    `json:"wall"`
+	Floorline   [7]Color       `json:"floorline"`
+	Points      uint8          `json:"points"`
 }
 
 func (p *Player) SetPatternline(index uint8, n uint8, c Color) error {
-	if n >= index {
+	if n > index+1 {
 		errmsg := fmt.Sprintf("patternline [%d] was set at (%d) which is too much, player:\n%v\n", index, n, *p)
 		return errors.New(errmsg)
 	}

@@ -3,13 +3,13 @@ package game
 const PLAYERCOUNT = 4
 
 type Game struct {
-	Seed            XS64
-	Players         [PLAYERCOUNT]Player
-	FactoryDisplays [2*PLAYERCOUNT + 1]FactoryDisplay
-	Center          Center    //[6]uint8
-	Sack            Sack      //[5]uint8
-	Discarded       Discarded //[5]uint8
-	State           State
+	Seed            XS64                              `json:"seed"`
+	Players         [PLAYERCOUNT]Player               `json:"players"`
+	FactoryDisplays [2*PLAYERCOUNT + 1]FactoryDisplay `json:"factorydisplays"`
+	Center          Center                            `json:"center"`
+	Sack            Sack                              `json:"sack"`
+	Discarded       Discarded                         `json:"discarded"`
+	State           State                             `json:"state"`
 }
 
 func NewGame(seed uint64) Game {

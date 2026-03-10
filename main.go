@@ -2,6 +2,7 @@ package main
 
 import (
 	"azul/game"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -28,13 +29,24 @@ func MakeNewGame(seed uint64) game.Game {
 	return g
 }
 
+/*
+func GameToJson(g game.Game) string {
+	b, err := json.Marshal(g)
+	if err != nil {
+		return ""
+	}
+	return string(b)
+}
+*/
+
 func main() {
 
 	gm := game.NewGameManager()
 
 	tmpl := template.Must(template.New("game").
 		Funcs(template.FuncMap{
-			"add": temp_add,
+			"add":  temp_add,
+			"json": game.GameToJson,
 		}).
 		ParseFiles(
 			"frontend/templates/center.html",
@@ -46,7 +58,6 @@ func main() {
 			"frontend/templates/discarded.html",
 			"frontend/templates/seed.html",
 		))
-
 	//fmt.Println(g.state)
 
 	r := chi.NewRouter()
@@ -66,6 +77,19 @@ func main() {
 		//
 		g.Center.RED = 5
 		g.Center.BLUE = 3
+
+		err := g.Players[0].SetPatternline(3, 4, game.RED)
+		err = g.Players[0].SetPatternline(1, 1, game.BLUE)
+		check(err)
+
+		g.Players[0].PlaceTileWall(0, 2)
+		jsonBytes, err := json.Marshal(g)
+		if err != nil {
+			fmt.Println("Error encoding JSON:", err)
+			return
+		}
+
+		fmt.Println(string(jsonBytes))
 		//
 		gm.Games[id] = g
 		fmt.Println("created game: ", id)

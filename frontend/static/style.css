@@ -85,6 +85,35 @@
     height: max-content; /* shrink to fit content vertically */
 }
 
+.discarded-container {
+    display: flex;          /* arrange children in a row */
+    flex-direction: row;    /* left-to-right layout */
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 20px;              /* spacing between factory displays */
+
+    border: 1px solid #333;
+    padding: 10px;
+
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
+.discarded {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 50px); */ /* 2 columns, 50px each */
+    /*grid-template-rows: repeat(2, 50px);*/    /* 2 rows, 50px each */
+    gap: 10px;                              /* spacing between tiles */
+    border: 1px solid #333;
+    padding: 10px;
+    
+    width: max-content;  /* shrink to fit content horizontally */
+    height: max-content; /* shrink to fit content vertically */
+}
+
 .drawing-container{
     display: flex;
     flex-direction: row;
