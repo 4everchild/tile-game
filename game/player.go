@@ -87,3 +87,43 @@ func (p *Player) CountPoints(y, x uint8) {
 	}
 
 }
+
+func (p *Player) AddTileToFloor(c Color, g *Game) {
+	var i = 0
+
+	for i = 0; i < len(p.Floorline); i++ {
+		if p.Floorline[i] == EMPTY {
+			break
+		}
+	}
+
+	if i >= len(p.Floorline) {
+		g.Discarded.add(c, 1)
+	} else {
+		p.Floorline[i] = c
+	}
+}
+
+func (p *Player) AddTileToPatternline(row uint8, c Color, g *Game) {
+	if p.Patternline[row].Size == (row + 1) {
+		p.AddTileToFloor(c, g)
+	} else {
+		p.Patternline[row].Size += 1
+		p.Patternline[row].Color = c
+	}
+}
+
+func (p *Player) PlaceFirst(g *Game) {
+	if p.Floorline[6] != EMPTY {
+		g.Discarded.add(p.Floorline[6], 1)
+		p.Floorline[6] = FIRST
+	}
+
+	var i = 0
+	for i = 0; i < len(p.Floorline); i++ {
+		if p.Floorline[i] == EMPTY {
+			break
+		}
+	}
+	p.Floorline[i] = FIRST
+}

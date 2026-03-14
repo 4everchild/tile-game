@@ -6,7 +6,6 @@ const data = document.getElementById("game-data").textContent.trim();
 
 let obj;
 obj = JSON.parse(data);
-obj = JSON.parse(obj)
 
 
 let gameroot = document.querySelector(".game-container")

@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"strconv"
 	"unsafe"
 
@@ -40,7 +42,7 @@ func GameToJson(g game.Game) string {
 */
 
 func main() {
-
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	gm := game.NewGameManager()
 
 	tmpl := template.Must(template.New("game").
@@ -112,6 +114,24 @@ func main() {
 	})
 
 	r.Post("/games/{ID}/move", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "ID")
+		id, _ := strconv.ParseUint(idStr, 10, 64)
+		g := gm.Games[id]
+
+		var move game.Move
+
+		err := json.NewDecoder(r.Body).Decode(&move)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		if move.IsValid(&g, logger) {
+			g.HandleMove(move)
+		}
+
+		gm.Games[id] = g
 
 	})
 

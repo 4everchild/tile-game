@@ -178,3 +178,50 @@ func (g *Game) Setup() {
 	// put back first tile
 	g.Center.FIRST = 1
 }
+
+func (g *Game) GetActivePlayer() int {
+	switch g.State {
+	case WAITP1:
+		return 0
+	case WAITP2:
+		return 1
+	case WAITP3:
+		return 2
+	case WAITP4:
+		return 3
+	default:
+		return -1
+	}
+}
+
+func (g *Game) HandleMove(m Move) {
+	g.ApplyMove(m, g.GetActivePlayer())
+}
+
+func (g *Game) ApplyMove(m Move, p int) {
+	var c Color
+	player := &g.Players[p]
+	if m.IsFromCenter(g) {
+		if g.Center.HasFirst() {
+			player.PlaceFirst(g)
+		}
+		c = m.Color
+		s := g.Center.Sizeof(c)
+		for i := uint8(0); i < s; i++ {
+			player.AddTileToPatternline(m.Row, c, g)
+		}
+		g.Center.remove(c, s)
+		return
+	}
+
+	for i := 0; i < 4; i++ {
+		c = g.FactoryDisplays[m.Group].Tiles[i]
+		if c == m.Color {
+			player.AddTileToPatternline(m.Row, c, g)
+		} else {
+			g.Center.add(c, 1)
+		}
+		g.FactoryDisplays[m.Group].Tiles[i] = EMPTY
+	}
+
+}
