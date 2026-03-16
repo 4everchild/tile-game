@@ -52,45 +52,45 @@ function addFactoryDisplay(root,factorydisplay){
 }
 
 function addCenter(root,center){
-    const tmp = makeDiv("center-container")
+    let tmp = makeDiv("center-container")
 
     if (center["BLUE"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["BLUE"];i++){
             addTile(ttmp,1)//index of "BLUE"
         }
         tmp.append(ttmp)
     }
     if (center["YELLOW"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["YELLOW"];i++){
             addTile(ttmp,2)//index of "YELLOW"
         }
         tmp.append(ttmp)
     }
     if (center["RED"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["RED"];i++){
             addTile(ttmp,3)//index of "RED"
         }
         tmp.append(ttmp)
     }
     if (center["BLACK"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["BLACK"];i++){
             addTile(ttmp,4)//index of "BLACK"
         }
         tmp.append(ttmp)
     }
     if (center["GREEN"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["GREEN"];i++){
             addTile(ttmp,5)//index of "GREEN"
         }
         tmp.append(ttmp)
     }
     if (center["FIRST"] > 0){
-        const ttmp = makeDiv("center")
+        let ttmp = makeDiv("center")
         for(let i =0;i<center["FIRST"];i++){
             addTile(ttmp,6)//index of "FIRST"
         }
@@ -102,9 +102,12 @@ function addCenter(root,center){
 
 function addTile(root,colornumber){
     let colors = colorValue[colornumber].split(" ")
-    const tmp = makeDiv("tile")
+    let tmp = makeDiv("tile")
     for (const color of colors ){
         tmp.classList.add(color)
+    }
+    if (tmp.classList.contains("FIRST")){
+        tmp.textContent=1
     }
     root.append(tmp)
 }

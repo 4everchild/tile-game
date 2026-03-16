@@ -79,45 +79,6 @@ function addHandlersToDraw(){
 }
 
 
-// TODO for the selection of the patternline on which the current selected tiles could be put
-// only available and legal moves should be put there
-/*
-let player;
-
-const players = document.querySelectorAll(".player")
-{
-const p = document.querySelector(".state").classList[1]
-
-if (p == "P1"){player=players[0]}
-if (p == "P2"){player=players[1]}
-if (p == "P3"){player=players[2]}
-if (p == "P4"){player=players[3]}
-}
-
-let pcs = player.querySelectorAll(".patternline-container")
-let wall = player.querySelector(".wall").querySelectorAll(".tile")
-
-//console.log(wall[5])
-
-for (const pc of pcs){
-    //console.log(pc)
-    pc.addEventListener("mouseenter",() => {
-
-    })
-    pc.addEventListener("mouseout",() => {
-
-    })
-    
-}
-
-*/
-
-
-
-
-
-
-
 function refresh(gameroot,obj){
     selected = null
     //fragment = document.createDocumentFragment();
