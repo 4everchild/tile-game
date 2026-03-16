@@ -23,6 +23,7 @@ func (m Move) IsValid(g *Game, logger *slog.Logger) bool {
 		logger.Info("color out of range for move")
 		return false
 	}
+
 	//center
 	if m.IsFromCenter(g) {
 		switch m.Color {
@@ -57,20 +58,28 @@ func (m Move) IsValid(g *Game, logger *slog.Logger) bool {
 				return false
 			}
 		}
-		// otherwise the factory displays
+		// otherwise from the factory displays
 	} else if g.FactoryDisplays[m.Group].CountTiles(m.Color) == 0 {
 		logger.Info("tiles of this color do not exist in specified group")
 		return false
 	}
 
-	if m.Row > 4 {
-		logger.Info("row bigger than 4, there are 5 patternlines per player")
-		return false
+	//destinations check
+
+	//for the floorline
+	if m.Row == 5 {
+		return true
 	}
 
+	if m.Row > 5 {
+		logger.Info("row bigger than 4, there are 5 patternlines per player + the floor")
+		return false
+	}
+	// patterline must have the same color or no color and have some capacity
 	p := g.GetActivePlayer()
 	c := g.Players[p].Patternline[m.Row].Color
-	if c != m.Color && c.IsTile() {
+	s := g.Players[p].Patternline[m.Row].Size
+	if c != m.Color && c.IsTile() && s < m.Row+1 {
 		s := fmt.Sprintf("player: %d at patternline %d already has color %s failed adding %s", p, m.Row, c.String(), m.Color.String())
 		logger.Info(s)
 		return false

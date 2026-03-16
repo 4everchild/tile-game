@@ -201,6 +201,9 @@ func (g *Game) HandleMove(m Move) {
 func (g *Game) ApplyMove(m Move, p int) {
 	var c Color
 	player := &g.Players[p]
+
+	toFloor := (m.Row == 5)
+
 	if m.IsFromCenter(g) {
 		if g.Center.HasFirst() {
 			player.PlaceFirst(g)
@@ -208,7 +211,11 @@ func (g *Game) ApplyMove(m Move, p int) {
 		c = m.Color
 		s := g.Center.Sizeof(c)
 		for i := uint8(0); i < s; i++ {
-			player.AddTileToPatternline(m.Row, c, g)
+			if toFloor {
+				player.AddTileToFloor(c, g)
+			} else {
+				player.AddTileToPatternline(m.Row, c, g)
+			}
 		}
 		g.Center.remove(c, s)
 		return
@@ -217,7 +224,11 @@ func (g *Game) ApplyMove(m Move, p int) {
 	for i := 0; i < 4; i++ {
 		c = g.FactoryDisplays[m.Group].Tiles[i]
 		if c == m.Color {
-			player.AddTileToPatternline(m.Row, c, g)
+			if toFloor {
+				player.AddTileToFloor(c, g)
+			} else {
+				player.AddTileToPatternline(m.Row, c, g)
+			}
 		} else {
 			g.Center.add(c, 1)
 		}
@@ -225,3 +236,5 @@ func (g *Game) ApplyMove(m Move, p int) {
 	}
 
 }
+
+//func (g *Game) ListAvailableMoves(p *Player) Move {}
