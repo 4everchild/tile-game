@@ -129,7 +129,7 @@ func main() {
 		}
 
 		if move.IsValid(&g, logger) {
-			g.HandleMove(move)
+			g.HandleMove(move, logger)
 		}
 
 		gm.Games[id] = g

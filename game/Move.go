@@ -12,6 +12,8 @@ type Move struct {
 }
 
 func (m Move) IsValid(g *Game, logger *slog.Logger) bool {
+
+	logger.Info(fmt.Sprintf("{%d , %s , %d}", m.Group, m.Color, m.Row))
 	// == means the center is selected
 	if m.Group > uint8(len(g.FactoryDisplays)) {
 		logger.Info("request with index out of range")
@@ -75,14 +77,27 @@ func (m Move) IsValid(g *Game, logger *slog.Logger) bool {
 		logger.Info("row bigger than 4, there are 5 patternlines per player + the floor")
 		return false
 	}
-	// patterline must have the same color or no color and have some capacity
+	// patterline must have the same color or no color
 	p := g.GetActivePlayer()
 	c := g.Players[p].Patternline[m.Row].Color
 	s := g.Players[p].Patternline[m.Row].Size
-	if c != m.Color && c.IsTile() && s < m.Row+1 {
+	if c != m.Color && c.IsTile() {
 		s := fmt.Sprintf("player: %d at patternline %d already has color %s failed adding %s", p, m.Row, c.String(), m.Color.String())
 		logger.Info(s)
 		return false
+	}
+
+	// patternline should have some capacity
+	if s >= m.Row+1 {
+		return false
+	}
+
+	// corresponding tile should not be present in the wall
+	// note the case for the floor is handled above
+	for i := 0; i < 5; i++ {
+		if g.Players[p].Wall[m.Row][i] == m.Color {
+			return false
+		}
 	}
 
 	return true

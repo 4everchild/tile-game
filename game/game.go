@@ -1,5 +1,10 @@
 package game
 
+import (
+	"fmt"
+	"log/slog"
+)
+
 const PLAYERCOUNT = 4
 
 type Game struct {
@@ -194,7 +199,11 @@ func (g *Game) GetActivePlayer() int {
 	}
 }
 
-func (g *Game) HandleMove(m Move) {
+func (g *Game) HandleMove(m Move, logger *slog.Logger) {
+	moves := g.ListAvailableMoves(&g.Players[g.GetActivePlayer()], logger)
+
+	fmt.Println(moves)
+
 	g.ApplyMove(m, g.GetActivePlayer())
 }
 
@@ -237,4 +246,18 @@ func (g *Game) ApplyMove(m Move, p int) {
 
 }
 
-//func (g *Game) ListAvailableMoves(p *Player) Move {}
+func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
+	moves := make([]Move, 0)
+	var move Move
+	for group := 0; group < len(g.FactoryDisplays); group++ {
+		for color := BLUE; color < GREEN; color++ {
+			for row := 0; row < 6; row++ {
+				move = Move{uint8(group), color, uint8(row)}
+				if move.IsValid(g, logger) {
+					moves = append(moves, move)
+				}
+			}
+		}
+	}
+	return moves
+}
