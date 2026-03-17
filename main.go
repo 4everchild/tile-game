@@ -43,6 +43,8 @@ func GameToJson(g game.Game) string {
 */
 
 func main() {
+	port := "3000"
+	fmt.Printf("serving on port: %s\n", port)
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	gm := game.NewGameManager()
 
@@ -136,6 +138,6 @@ func main() {
 
 	})
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":"+port, r)
 
 }
