@@ -45,21 +45,15 @@ function addTilesEventListeners(container, total){
 
         tile.addEventListener ("click",(e) =>{
             e.stopPropagation()
-            console.log(selected)
-            
-            
 
             if (tile.classList.contains("SELECTED")){
                 selected=null
-                resetSelected(selected,total)
+                resetSelected(total)
                 return
             }
             
             selected=null
-            resetSelected(selected,total)
-            console.log(selected)
-
-            
+            resetSelected(total)
 
             selected = Array.from(container.querySelectorAll(".tile.BLINK"))
             for (const t of selected){t.classList.add("SELECTED")}
@@ -84,7 +78,7 @@ function addTilesEventListeners(container, total){
     }
 }
 
-function resetSelected(selected, total){
+function resetSelected(total){
     for (const t of total){
         t.classList.remove("OPAQUE1")
         t.classList.remove("SELECTED")
@@ -213,7 +207,8 @@ function countTilesInPatterline(pl,color){
 
 function addDrawingContainerEvents(dc,selected,total){
     dc.addEventListener("click", (e) => {
-        resetSelected(selected,total)
+        selected = null
+        resetSelected(total)
     })
 }
 

@@ -49,19 +49,8 @@ func main() {
 	gm := game.NewGameManager()
 
 	tmpl := template.Must(template.New("game").
-		Funcs(template.FuncMap{
-			"add":  temp_add,
-			"json": game.GameToJson,
-		}).
 		ParseFiles(
-			"frontend/templates/center.html",
 			"frontend/templates/game.html",
-			"frontend/templates/factory_display.html",
-			"frontend/templates/player.html",
-
-			"frontend/templates/sack.html",
-			"frontend/templates/discarded.html",
-			"frontend/templates/seed.html",
 		))
 	//fmt.Println(g.state)
 
