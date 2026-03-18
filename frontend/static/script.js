@@ -45,12 +45,21 @@ function addTilesEventListeners(container, total){
 
         tile.addEventListener ("click",(e) =>{
             e.stopPropagation()
+            console.log(selected)
+            
+            
 
             if (tile.classList.contains("SELECTED")){
-                resetSelected(selected,total);
+                selected=null
+                resetSelected(selected,total)
                 return
             }
+            
+            selected=null
             resetSelected(selected,total)
+            console.log(selected)
+
+            
 
             selected = Array.from(container.querySelectorAll(".tile.BLINK"))
             for (const t of selected){t.classList.add("SELECTED")}
@@ -76,9 +85,9 @@ function addTilesEventListeners(container, total){
 }
 
 function resetSelected(selected, total){
-    for (const t of total){t.classList.remove("OPAQUE1")
+    for (const t of total){
+        t.classList.remove("OPAQUE1")
         t.classList.remove("SELECTED")
-        selected=null
     }
 }
 
@@ -99,6 +108,20 @@ function addHandlersToDraw(root){
     for (let i=0;i<5;i++){
         addPatternlinesEvents(pls[i],Array.from(wallTiles).slice(i*5,i*5+5),i)
     }
+
+    const floor = root.querySelector(".floor")
+    addFloorEvents(floor)
+}
+
+function addFloorEvents(floor){
+    floor.addEventListener("click", () => {
+    console.log(selected)
+        if(selected != null){
+            console.log("### is valid! ###\n")
+        }else{
+            console.log("### not valid ###\n")
+        }
+    })
 }
 
 function addPatternlinesEvents(pl,wallTiles){
@@ -108,7 +131,7 @@ function addPatternlinesEvents(pl,wallTiles){
         //console.log(isSelectedMoveValid())
         console.log(pl)
         console.log(wallTiles)
-        if(isSelectedMoveValid(pl,wallTiles)){
+        if(isSelectedMoveValidForPatternline(pl,wallTiles)){
             //perform request here
             console.log("### is valid! ###\n")
         }else{
@@ -121,7 +144,7 @@ function addPatternlinesEvents(pl,wallTiles){
 
 
 //only for patternline event, not for general purpouse
-function isSelectedMoveValid(patternline,wallTiles){
+function isSelectedMoveValidForPatternline(patternline,wallTiles){
     let color = getColorSelected()
     if (!color){
         console.log("### 1")
