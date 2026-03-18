@@ -45,25 +45,31 @@ function addTilesEventListeners(container, total){
 
         tile.addEventListener ("click",(e) =>{
             e.stopPropagation()
+
+            if (tile.classList.contains("SELECTED")){
+                resetSelected(selected,total);
+                return
+            }
             resetSelected(selected,total)
 
-            if (tile.classList.contains("SELECTED")){return}
-
-            selected = container.querySelectorAll(".tile.BLINK")
+            selected = Array.from(container.querySelectorAll(".tile.BLINK"))
             for (const t of selected){t.classList.add("SELECTED")}
             
             
             // if selecting from center we must select 1st as well
             if (container.classList[0]=="center"){
                 for (const t of total) {
-                    if (t.classList[1]=="FIRST"){t.classList.add("SELECTED")}
+                    if (t.classList[1]=="FIRST"){
+                        t.classList.add("SELECTED")
+                        selected.push(t)
+                    }
                 }
             }
 
             for (const t of total){ 
                 if (!t.classList.contains("SELECTED")){t.classList.add("OPAQUE1")} 
             }
-            //console.log(getColorSelected())
+            console.log(getColorSelected())
 
         })
     }
@@ -86,40 +92,102 @@ function addHandlersToDraw(root){
 
     const dc = root.querySelector(".drawing-container")
     addDrawingContainerEvents(dc,selected, drawTiles)
-
-    //const pls = root.querySelectorAll(".patternline-container")
-    //const wallTiles = root.querySelector(".wall").querySelectorAll(".tile")
-    //for (let i=0;i<5;i++){
-    //    addPatternlinesEvents(pls[i],Array.from(wallTiles).slice(i*5,i*5+5),i)
-    //}
+    
+    const pls = root.querySelectorAll(".patternline-container")
+    const wallTiles = root.querySelector(".wall").querySelectorAll(".tile")
+    
+    for (let i=0;i<5;i++){
+        addPatternlinesEvents(pls[i],Array.from(wallTiles).slice(i*5,i*5+5),i)
+    }
 }
-/*
-function addPatternlinesEvents(pl,wallTiles,i){
+
+function addPatternlinesEvents(pl,wallTiles){
     console.log(pl)
     console.log(wallTiles)
-    console.log(i)
-    pl.addEventListener("mouseenter", () =>{
-        //tiles = pl.querySelectorAll("tile")
+    pl.addEventListener("click", () =>{
+        //console.log(isSelectedMoveValid())
+        console.log(pl)
+        console.log(wallTiles)
+        if(isSelectedMoveValid(pl,wallTiles)){
+            //perform request here
+            console.log("### is valid! ###\n")
+        }else{
+            console.log("### not valid ###\n")
+        }
 
-        // if can't place it shoud stop
-        // if it can place it should set the tiles opaque, also the floorline
+
     })
 }
-*/
 
-/*
-function canPlace(color,patternline,wallTiles,index){
-    if (index>5){return false}
-    if (index==5){return true}
-    
-    //plTiles = 
+
+//only for patternline event, not for general purpouse
+function isSelectedMoveValid(patternline,wallTiles){
+    let color = getColorSelected()
+    if (!color){
+        console.log("### 1")
+        return false
+    } 
+    // means !selected
+    if (color == "FIRST"){
+        console.log("### 2")
+        return false
+    }
+
+    for (const tile of wallTiles){
+        console.log(tile)
+        if (color == tile.classList[1] && !tile.classList.contains("OPAQUE")){
+            console.log("### 3")
+            return false
+        }
+    }
+
+    // selected already cannot be empty
+    if (getColorPatternline(patternline) != color && getColorPatternline(patternline) !="EMPTY"){
+        return false 
+    }
+
+    if (countTilesInPatterline(patternline,"EMPTY") == 0){
+        return false
+    }
+
+    return true 
 }
 
 function getColorSelected(){
-    console.log(selected)
+    if(!selected){return null}
+    for (const tile of selected){
+        return tile.classList[1]
+    }
+    return null;
 }
 
-*/
+// TODO look here
+function getColorPatternline(pl){
+    const tiles = pl.querySelectorAll(".tile")
+    for (const tile of tiles){
+        if (tile.classList[1]=="EMPTY"){continue}
+        return tile.classList[1]
+    }
+    return "EMPTY"
+}
+
+function isFirstSelected(){
+    for (const tile of selected){
+        if (tile.classList[1]=="FIRST"){return true}
+    }
+    return false
+}
+
+function countTilesInPatterline(pl,color){
+    let i =0
+    const tiles = pl.querySelectorAll(".tile")
+    for (const tile of tiles){
+        if (tile.classList[1] == color){i++}
+    }
+    return i
+}
+
+
 function addDrawingContainerEvents(dc,selected,total){
     dc.addEventListener("click", (e) => {
         resetSelected(selected,total)
