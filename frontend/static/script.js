@@ -4,7 +4,6 @@ import { makeDiv, addDiv } from "./utils.js"
 
 
 
-
 const data = document.getElementById("game-data").textContent.trim(); 
 
 let gameobj = JSON.parse(data);
@@ -94,7 +93,7 @@ function addHandlersToDraw(root){
     centers.forEach(center => addTilesEventListeners(center, drawTiles))
 
     const dc = root.querySelector(".drawing-container")
-    addDrawingContainerEvents(dc,selected, drawTiles)
+    addDrawingContainerEvents(dc, drawTiles)
     
     const pls = root.querySelectorAll(".patternline-container")
     const wallTiles = root.querySelector(".wall").querySelectorAll(".tile")
@@ -111,6 +110,7 @@ function addFloorEvents(floor){
     floor.addEventListener("click", () => {
     console.log(selected)
         if(selected != null){
+            // TODO perform request here
             console.log("### is valid! ###\n")
         }else{
             console.log("### not valid ###\n")
@@ -122,11 +122,10 @@ function addPatternlinesEvents(pl,wallTiles){
     console.log(pl)
     console.log(wallTiles)
     pl.addEventListener("click", () =>{
-        //console.log(isSelectedMoveValid())
         console.log(pl)
         console.log(wallTiles)
         if(isSelectedMoveValidForPatternline(pl,wallTiles)){
-            //perform request here
+            // TODO perform request here
             console.log("### is valid! ###\n")
         }else{
             console.log("### not valid ###\n")
@@ -204,13 +203,13 @@ function countTilesInPatterline(pl,color){
     return i
 }
 
-
-function addDrawingContainerEvents(dc,selected,total){
+function addDrawingContainerEvents(dc,total){
     dc.addEventListener("click", (e) => {
         selected = null
         resetSelected(total)
     })
 }
+
 
 
 
@@ -227,4 +226,3 @@ function refresh(gameroot,obj){
 }
 
 //render(gameroot,obj)
-
