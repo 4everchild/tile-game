@@ -8,6 +8,7 @@ const data = document.getElementById("game-data").textContent.trim();
 
 let gameobj = JSON.parse(data);
 
+const nPlayers = gameobj.players.length
 
 let gameroot = document.querySelector(".game-container")
 

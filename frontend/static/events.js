@@ -111,11 +111,14 @@ function addFloorEvents(floor){
 function addPatternlinesEvents(pl,wallTiles){
     console.log(pl)
     console.log(wallTiles)
+    const plid = pl.dataset.index
+    console.log(plid)
     pl.addEventListener("click", () =>{
+        console.log(plid)
         console.log(pl)
         console.log(wallTiles)
         if(isSelectedMoveValidForPatternline(pl,wallTiles)){
-            // TODO perform request here
+            //let move = makemove(getGroupSelected,getColorSelected(),row)// TODO perform request here
             console.log("### is valid! ###\n")
         }else{
             console.log("### not valid ###\n")

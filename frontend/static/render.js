@@ -34,15 +34,17 @@ function addGame(root,game){
 
 function addFactoryDisplays(root,factorydisplays){
     const tmp = makeDiv("factory-display-container")
-    
+    let i =0
     for (const fd of factorydisplays){
-        addFactoryDisplay(tmp,fd)
+        addFactoryDisplay(tmp,fd,i)
+        i++
     }
     root.append(tmp)
 }
 
-function addFactoryDisplay(root,factorydisplay){
+function addFactoryDisplay(root,factorydisplay,i){
     const tmp = makeDiv("factory-display")
+    tmp.dataset.index = i
 
     for (const tile of factorydisplay["tiles"]){
         addTile(tmp,tile)
@@ -283,6 +285,7 @@ function addPatternlines(root,patternlines){
 
 function addPatternline(root,patternline,j){
     const tmp = makeDiv("patternline-container")
+    tmp.dataset.index =j 
     for (let i = 0; i<=j; i++){
         if (i<patternline["size"]){
             addTile(tmp,patternline["color"])
