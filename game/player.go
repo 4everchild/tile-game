@@ -114,6 +114,7 @@ func (p *Player) AddTileToPatternline(row uint8, c Color, g *Game) {
 }
 
 func (p *Player) PlaceFirst(g *Game) {
+	defer g.Center.remove(FIRST, 1)
 	if p.Floorline[6] != EMPTY {
 		g.Discarded.add(p.Floorline[6], 1)
 		p.Floorline[6] = FIRST
@@ -125,5 +126,10 @@ func (p *Player) PlaceFirst(g *Game) {
 			break
 		}
 	}
-	p.Floorline[i] = FIRST
+	if i == 7 {
+		g.Discarded.add(p.Floorline[6], 1)
+		p.Floorline[6] = FIRST
+	} else {
+		p.Floorline[i] = FIRST
+	}
 }

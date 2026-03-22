@@ -218,6 +218,9 @@ func (g *Game) ApplyMove(m Move, p int) {
 			player.PlaceFirst(g)
 		}
 		c = m.Color
+		if c == FIRST {
+			return
+		}
 		s := g.Center.Sizeof(c)
 		for i := uint8(0); i < s; i++ {
 			if toFloor {

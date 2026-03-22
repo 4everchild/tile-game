@@ -1,5 +1,5 @@
 export {getSelected, setSelected, addHandlersToDraw}
-import { nPlayers, gameId } from "./script.js"
+import { nPlayers, url } from "./script.js"
 
 import { colorValue } from "./utils.js"
 let selected
@@ -105,7 +105,7 @@ function addFloorEvents(floor){
             const move = {group: getGroupSelected(),color: getColorNumberSelected(),row: 5}// TODO perform request here
             console.log(move)
             try {
-                const response = await fetch('http://localhost:3000/games/'+gameId+'/move', {
+                const response = await fetch(url+'/move', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(move)
@@ -132,7 +132,7 @@ function addPatternlinesEvents(pl,wallTiles){
             const move = {group: getGroupSelected(),color: getColorNumberSelected(),row: plid }// TODO perform request here
             console.log(move)
             try {
-                const response = await fetch('http://localhost:3000/games/'+gameId+'/move', {
+                const response = await fetch(url+'/move', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(move)

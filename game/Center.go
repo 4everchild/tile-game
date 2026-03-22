@@ -40,6 +40,8 @@ func (d *Center) remove(c Color, amount uint8) {
 		d.BLACK -= amount
 	case GREEN:
 		d.GREEN -= amount
+	case FIRST:
+		d.FIRST -= amount
 	}
 }
 
