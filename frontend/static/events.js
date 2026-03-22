@@ -1,5 +1,7 @@
 export {getSelected, setSelected, addHandlersToDraw}
+import { nPlayers, gameId } from "./script.js"
 
+import { colorValue } from "./utils.js"
 let selected
 
 function getSelected(){
@@ -97,11 +99,26 @@ function addHandlersToDraw(root){
 }
 
 function addFloorEvents(floor){
-    floor.addEventListener("click", () => {
+    floor.addEventListener("click", async() => {
     console.log(selected)
         if(selected != null){
-            // TODO perform request here
-            console.log("### is valid! ###\n")
+            const move = {group: getGroupSelected(),color: getColorNumberSelected(),row: 5}// TODO perform request here
+            console.log(move)
+            try {
+                const response = await fetch('http://localhost:3000/games/'+gameId+'/move', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(move)
+                });
+
+                if (!response.ok) throw new Error('Server error');
+
+                const result = await response.json();
+                console.log('Success:', result);
+
+            } catch (err) {
+                console.error('Request failed:', err);
+            }
         }else{
             console.log("### not valid ###\n")
         }
@@ -109,17 +126,26 @@ function addFloorEvents(floor){
 }
 
 function addPatternlinesEvents(pl,wallTiles){
-    console.log(pl)
-    console.log(wallTiles)
-    const plid = pl.dataset.index
-    console.log(plid)
-    pl.addEventListener("click", () =>{
-        console.log(plid)
-        console.log(pl)
-        console.log(wallTiles)
+    const plid = Number.parseInt(pl.dataset.index)
+    pl.addEventListener("click", async () =>{
         if(isSelectedMoveValidForPatternline(pl,wallTiles)){
-            //let move = makemove(getGroupSelected,getColorSelected(),row)// TODO perform request here
-            console.log("### is valid! ###\n")
+            const move = {group: getGroupSelected(),color: getColorNumberSelected(),row: plid }// TODO perform request here
+            console.log(move)
+            try {
+                const response = await fetch('http://localhost:3000/games/'+gameId+'/move', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(move)
+                });
+
+                if (!response.ok) throw new Error('Server error');
+
+                const result = await response.json();
+                console.log('Success:', result);
+
+            } catch (err) {
+                console.error('Request failed:', err);
+            }
         }else{
             console.log("### not valid ###\n")
         }
@@ -128,6 +154,18 @@ function addPatternlinesEvents(pl,wallTiles){
     })
 }
 
+function getGroupSelected(){
+    if(!selected){return null}
+
+    for (const tile of selected){
+        const parent = tile.parentElement
+        if(parent.dataset.index){
+            return Number.parseInt(parent.dataset.index)
+        }else{
+            return 2*nPlayers +1
+        }
+    }
+}
 
 function getColorSelected(){
     console.log(selected)
@@ -138,6 +176,14 @@ function getColorSelected(){
     return null;
 }
 
+function getColorNumberSelected(){
+    console.log(selected)
+    if(!selected){return null}
+    for (const tile of selected){
+        return colorValue.indexOf(tile.classList[1])
+    }
+    return null;
+}
 
 
 //only for patternline event, not for general purpouse

@@ -121,9 +121,18 @@ func main() {
 
 		if move.IsValid(&g, logger) {
 			g.HandleMove(move, logger)
-		}
+			gm.Games[id] = g
 
-		gm.Games[id] = g
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			response := map[string]string{"message": "move received"}
+			json.NewEncoder(w).Encode(response)
+		} else {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			response := map[string]string{"message": "move not valid"}
+			json.NewEncoder(w).Encode(response)
+		}
 
 	})
 
