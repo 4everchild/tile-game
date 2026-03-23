@@ -125,8 +125,8 @@ func main() {
 
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
-			response := map[string]string{"message": "move received"}
-			json.NewEncoder(w).Encode(response)
+			//response := map[string]string{"message": "move received"}
+			json.NewEncoder(w).Encode(g)
 		} else {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)

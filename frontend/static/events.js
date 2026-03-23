@@ -1,5 +1,5 @@
 export {getSelected, setSelected, addHandlersToDraw}
-import { nPlayers, url } from "./script.js"
+import { nPlayers, url, refresh, gameroot } from "./script.js"
 
 import { colorValue } from "./utils.js"
 let selected
@@ -100,7 +100,7 @@ function addHandlersToDraw(root){
 
 function addFloorEvents(floor){
     floor.addEventListener("click", async() => {
-    console.log(selected)
+    //console.log(selected)
         if(selected != null){
             const move = {group: getGroupSelected(),color: getColorNumberSelected(),row: 5}// TODO perform request here
             console.log(move)
@@ -114,7 +114,7 @@ function addFloorEvents(floor){
                 if (!response.ok) throw new Error('Server error');
 
                 const result = await response.json();
-                console.log('Success:', result);
+                refresh(gameroot,result)
 
             } catch (err) {
                 console.error('Request failed:', err);
@@ -141,6 +141,7 @@ function addPatternlinesEvents(pl,wallTiles){
                 if (!response.ok) throw new Error('Server error');
 
                 const result = await response.json();
+                refresh(gameroot,result)
                 console.log('Success:', result);
 
             } catch (err) {

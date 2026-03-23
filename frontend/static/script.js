@@ -11,7 +11,7 @@ let gameobj = JSON.parse(data);
 export const nPlayers = gameobj.players.length
 export const url = window.location.href
 
-let gameroot = document.querySelector(".game-container")
+export const gameroot = document.querySelector(".game-container")
 
 function getActivePlayer(root){
     const state = root.querySelector(".state")
@@ -36,7 +36,7 @@ refresh(gameroot,gameobj)
 
 //function addDrawEventListeners
 
-function refresh(gameroot,obj){
+export function refresh(gameroot,obj){
     setSelected(null)
     //fragment = document.createDocumentFragment();
     //addGame(fragment,obj)
