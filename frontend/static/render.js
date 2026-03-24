@@ -226,7 +226,7 @@ function addPlayers(root,players){
     let i =0;
     for(const player of players){
 
-        const tmp = makeDiv("player player"+i)
+        const tmp = makeDiv("player player"+(i+1))
         const ttmp = makeDiv("flex-container-column")
 
         addName(ttmp,"PLAYER" + (i+1))

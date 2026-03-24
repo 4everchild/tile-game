@@ -1,24 +1,20 @@
 package game
 
-import (
-	"fmt"
-)
+//"fmt"
 
-func AdvanceGame(g Game) (Game, error) {
-	g1 := g
-	switch g1.State {
+func (g *Game) AdvanceGame() {
+	switch g.State {
 	case SETUP:
-		g1.Setup()
+		g.Setup()
 	case WAITP1:
-		//g1.HandleMove(0,)
+		g.State = WAITP2
 	case WAITP2:
+		g.State = WAITP3
 	case WAITP3:
+		g.State = WAITP4
 	case WAITP4:
+		g.State = WAITP1
 	case END:
-		return g, fmt.Errorf("game ended")
 	default:
-		return g, fmt.Errorf("invalid game phase: %d", g.State)
 	}
-
-	return g1, nil
 }

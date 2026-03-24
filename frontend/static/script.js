@@ -1,6 +1,6 @@
 import {render} from "./render.js"
 import { makeDiv, addDiv } from "./utils.js"
-import {setSelected,getSelected, addHandlersToDraw } from "./events.js";
+import {setSelected,getSelected, addHandlersToDraw, addPlayerEvents } from "./events.js";
 
 
 
@@ -44,6 +44,10 @@ export function refresh(gameroot,obj){
     gameroot.replaceChildren(fragment)
 
     addHandlersToDraw(gameroot)
+    
+    const player = getActivePlayer(gameroot)
+    console.log(player)
+    addPlayerEvents(player)
 }
 
 //render(gameroot,obj)

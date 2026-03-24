@@ -29,7 +29,7 @@ func (m *GameManager) GenerateId() uint64 {
 func (m *GameManager) CreateGame() uint64 {
 	id := m.GenerateId()
 	game := NewGame(id)
-	game.Setup()
+	game.AdvanceGame()
 	m.Games[id] = game
 
 	return id

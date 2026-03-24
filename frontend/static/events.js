@@ -1,4 +1,4 @@
-export {getSelected, setSelected, addHandlersToDraw}
+export {getSelected, setSelected, addHandlersToDraw, addPlayerEvents}
 import { nPlayers, url, refresh, gameroot } from "./script.js"
 
 import { colorValue } from "./utils.js"
@@ -87,6 +87,9 @@ function addHandlersToDraw(root){
     const dc = root.querySelector(".drawing-container")
     addDrawingContainerEvents(dc, drawTiles)
     
+
+    // TODO fix player selection
+    /*
     const pls = root.querySelectorAll(".patternline-container")
     const wallTiles = root.querySelector(".wall").querySelectorAll(".tile")
     
@@ -95,6 +98,20 @@ function addHandlersToDraw(root){
     }
 
     const floor = root.querySelector(".floor")
+    addFloorEvents(floor)
+    */
+}
+
+function addPlayerEvents(player){
+    // TODO fix player selection
+    const pls = player.querySelectorAll(".patternline-container")
+    const wallTiles = player.querySelector(".wall").querySelectorAll(".tile")
+    
+    for (let i=0;i<5;i++){
+        addPatternlinesEvents(pls[i],Array.from(wallTiles).slice(i*5,i*5+5),i)
+    }
+
+    const floor = player.querySelector(".floor")
     addFloorEvents(floor)
 }
 
