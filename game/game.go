@@ -195,11 +195,31 @@ func (g *Game) Setup() {
 	case 3:
 		g.State = WAITP4
 	default:
-		g.State = END
 	}
 
 	// put back first tile
 	g.Center.FIRST = 1
+
+	// if row is completed// endgame
+	if g.IsGameConcluded() {
+		g.State = END
+	}
+
+}
+
+func (g *Game) IsGameConcluded() bool {
+	for i := 0; i < len(g.Players); i++ {
+		for j := 0; j < 5; j++ {
+			if g.Players[i].Wall[j][0].IsTile() &&
+				g.Players[i].Wall[j][1].IsTile() &&
+				g.Players[i].Wall[j][2].IsTile() &&
+				g.Players[i].Wall[j][3].IsTile() &&
+				g.Players[i].Wall[j][4].IsTile() {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (g *Game) GetActivePlayer() int {
@@ -307,7 +327,7 @@ func (g *Game) MakeRandomMove(logger *slog.Logger) {
 
 func (g *Game) MakeCpuMoves(logger *slog.Logger) {
 	fmt.Println(g.AreAllTilesPlaced())
-	for g.State != WAITP1 {
+	for g.State != WAITP1 && g.State != END {
 		g.MakeRandomMove(logger)
 		g.AdvanceGame()
 	}
