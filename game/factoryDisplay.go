@@ -23,3 +23,7 @@ func (fd *FactoryDisplay) CountTiles(c Color) int {
 	return count
 
 }
+
+func (fd *FactoryDisplay) IsEmpty() bool {
+	return (fd.Tiles[0] == EMPTY) && (fd.Tiles[1] == EMPTY) && (fd.Tiles[2] == EMPTY) && (fd.Tiles[3] == EMPTY)
+}

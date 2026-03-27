@@ -68,23 +68,11 @@ func main() {
 	r.Post("/games", func(w http.ResponseWriter, r *http.Request) {
 		id := gm.CreateGame()
 		g := gm.Games[id]
+
 		//
-		g.Center.RED = 5
-		g.Center.BLUE = 3
 
-		err := g.Players[0].SetPatternline(3, 4, game.RED)
-		err = g.Players[0].SetPatternline(1, 1, game.BLUE)
-		check(err)
-
-		g.Players[0].PlaceTileWall(0, 2)
-		jsonBytes, err := json.Marshal(g)
-		if err != nil {
-			fmt.Println("Error encoding JSON:", err)
-			return
-		}
-
-		fmt.Println(string(jsonBytes))
 		//
+
 		gm.Games[id] = g
 		fmt.Println("created game: ", id)
 		fmt.Println(unsafe.Sizeof(g))

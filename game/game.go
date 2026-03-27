@@ -132,7 +132,20 @@ func (g *Game) SetTile(i, j uint8, c Color) {
 	}
 
 }
-
+func (g *Game) AreAllTilesPlaced() bool {
+	for i := 0; i < PLAYERCOUNT*2+1; i++ {
+		// if the first tile is empty <-> all 4 are empty
+		//fmt.Println(g.FactoryDisplays[i].IsEmpty())
+		fmt.Printf("%d: %t\n", i, g.FactoryDisplays[i].IsEmpty())
+		if g.FactoryDisplays[i].Tiles[0] != EMPTY {
+			return false
+		}
+	}
+	if g.Center.BLUE+g.Center.RED+g.Center.YELLOW+g.Center.BLACK+g.Center.GREEN+g.Center.FIRST > 0 {
+		return false
+	}
+	return true
+}
 func (g *Game) Setup() {
 	// set tile and score points score points
 	for i := range uint8(PLAYERCOUNT) {
@@ -154,9 +167,12 @@ func (g *Game) Setup() {
 				break
 			}
 			if g.Players[i].Floorline[j] == FIRST {
-				firstPlayer = j
+				firstPlayer = i
+				fmt.Printf("i is: %d\n", i)
 			}
 			g.Players[i].Points -= min(FloorLinePenalties[j], g.Players[i].Points)
+			g.Discarded.add(g.Players[i].Floorline[j], 1)
+			g.Players[i].Floorline[j] = EMPTY
 		}
 	}
 
@@ -167,6 +183,9 @@ func (g *Game) Setup() {
 		g.fillfd(i, 2)
 		g.fillfd(i, 3)
 	}
+
+	fmt.Printf("first player is: %d\n", firstPlayer)
+
 	switch firstPlayer {
 	case 0:
 		g.State = WAITP1
@@ -200,16 +219,15 @@ func (g *Game) GetActivePlayer() int {
 }
 
 func (g *Game) HandleMove(m Move, logger *slog.Logger) {
-	moves := g.ListAvailableMoves(&g.Players[g.GetActivePlayer()], logger)
+	//moves := g.ListAvailableMoves(&g.Players[g.GetActivePlayer()], logger)
+	//fmt.Println(moves)
 
-	fmt.Println(moves)
-
-	g.ApplyMove(m, g.GetActivePlayer())
+	g.ApplyMove(m, &g.Players[g.GetActivePlayer()])
 }
 
-func (g *Game) ApplyMove(m Move, p int) {
+func (g *Game) ApplyMove(m Move, player *Player) {
 	var c Color
-	player := &g.Players[p]
+	//player := &g.Players[p]
 
 	toFloor := (m.Row == 5)
 
@@ -263,4 +281,13 @@ func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
 		}
 	}
 	return moves
+}
+
+func (g *Game) MakeRandomMove(p *Player, logger *slog.Logger) {
+	moves := g.ListAvailableMoves(p, logger)
+	fmt.Println(moves)
+
+	//n := int(g.Seed.Step()) % len(moves)
+
+	//g.ApplyMove(moves[n])
 }
