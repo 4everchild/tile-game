@@ -136,7 +136,7 @@ func (g *Game) AreAllTilesPlaced() bool {
 	for i := 0; i < PLAYERCOUNT*2+1; i++ {
 		// if the first tile is empty <-> all 4 are empty
 		//fmt.Println(g.FactoryDisplays[i].IsEmpty())
-		fmt.Printf("%d: %t\n", i, g.FactoryDisplays[i].IsEmpty())
+		//fmt.Printf("%d: %t\n", i, g.FactoryDisplays[i].IsEmpty())
 		if g.FactoryDisplays[i].Tiles[0] != EMPTY {
 			return false
 		}
@@ -168,7 +168,6 @@ func (g *Game) Setup() {
 			}
 			if g.Players[i].Floorline[j] == FIRST {
 				firstPlayer = i
-				fmt.Printf("i is: %d\n", i)
 			}
 			g.Players[i].Points -= min(FloorLinePenalties[j], g.Players[i].Points)
 			g.Discarded.add(g.Players[i].Floorline[j], 1)
@@ -270,7 +269,8 @@ func (g *Game) ApplyMove(m Move, player *Player) {
 func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
 	moves := make([]Move, 0)
 	var move Move
-	for group := 0; group < len(g.FactoryDisplays); group++ {
+	var group int
+	for group = 0; group < len(g.FactoryDisplays); group++ {
 		for color := BLUE; color < GREEN; color++ {
 			for row := 0; row < 6; row++ {
 				move = Move{uint8(group), color, uint8(row)}
@@ -280,14 +280,36 @@ func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
 			}
 		}
 	}
+
+	for color := BLUE; color < FIRST; color++ {
+		for row := 0; row < 6; row++ {
+			move = Move{uint8(group), color, uint8(row)}
+			if move.IsValid(g, logger) {
+				moves = append(moves, move)
+			}
+		}
+	}
+
 	return moves
 }
 
-func (g *Game) MakeRandomMove(p *Player, logger *slog.Logger) {
+func (g *Game) MakeRandomMove(logger *slog.Logger) {
+	p := &g.Players[g.GetActivePlayer()]
+
 	moves := g.ListAvailableMoves(p, logger)
-	fmt.Println(moves)
+	//fmt.Println(moves)
+	n := g.Seed.Step() % uint64(len(moves))
+	//fmt.Println(n)
+	//fmt.Println(moves[n])
 
-	//n := int(g.Seed.Step()) % len(moves)
+	g.ApplyMove(moves[n], p)
+}
 
-	//g.ApplyMove(moves[n])
+func (g *Game) MakeCpuMoves(logger *slog.Logger) {
+	fmt.Println(g.AreAllTilesPlaced())
+	for g.State != WAITP1 {
+		g.MakeRandomMove(logger)
+		g.AdvanceGame()
+	}
+
 }

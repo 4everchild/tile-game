@@ -6,7 +6,7 @@ import "fmt"
 
 func (g *Game) AdvanceGame() {
 	fmt.Println(g.State)
-	fmt.Println(g.AreAllTilesPlaced())
+	//fmt.Println(g.AreAllTilesPlaced())
 
 	switch g.State {
 	case SETUP:

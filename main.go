@@ -111,6 +111,10 @@ func main() {
 			g.HandleMove(move, logger)
 			g.AdvanceGame()
 
+			// temporarily hardcoded cpu moves
+			g.MakeCpuMoves(logger)
+			//
+
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			//response := map[string]string{"message": "move received"}
