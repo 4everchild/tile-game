@@ -133,3 +133,45 @@ func (p *Player) PlaceFirst(g *Game) {
 		p.Floorline[i] = FIRST
 	}
 }
+
+func (p *Player) IsWallRowFull(r int) bool {
+	if p.Wall[r][0].IsTile() &&
+		p.Wall[r][1].IsTile() &&
+		p.Wall[r][2].IsTile() &&
+		p.Wall[r][3].IsTile() &&
+		p.Wall[r][4].IsTile() {
+		//fmt.Printf("row %d for player %v", r, p.Points)
+		return true
+	}
+	return false
+}
+
+func (p *Player) IsWallColumnFull(c int) bool {
+	if p.Wall[0][c].IsTile() &&
+		p.Wall[1][c].IsTile() &&
+		p.Wall[2][c].IsTile() &&
+		p.Wall[3][c].IsTile() &&
+		p.Wall[4][c].IsTile() {
+		//fmt.Printf("column %d for player %v", c, p.Points)
+		return true
+	}
+	return false
+}
+
+func (p *Player) IsWallColorFull(c Color) bool {
+	switch c {
+	case BLUE:
+
+		return p.Wall[0][0].IsTile() && p.Wall[1][1].IsTile() && p.Wall[2][2].IsTile() && p.Wall[3][3].IsTile() && p.Wall[4][4].IsTile()
+	case YELLOW:
+		return p.Wall[0][1].IsTile() && p.Wall[1][2].IsTile() && p.Wall[2][3].IsTile() && p.Wall[3][4].IsTile() && p.Wall[4][0].IsTile()
+	case RED:
+		return p.Wall[0][2].IsTile() && p.Wall[1][3].IsTile() && p.Wall[2][4].IsTile() && p.Wall[3][0].IsTile() && p.Wall[4][1].IsTile()
+	case BLACK:
+		return p.Wall[0][3].IsTile() && p.Wall[1][4].IsTile() && p.Wall[2][0].IsTile() && p.Wall[3][1].IsTile() && p.Wall[4][2].IsTile()
+	case GREEN:
+		return p.Wall[0][4].IsTile() && p.Wall[1][0].IsTile() && p.Wall[2][1].IsTile() && p.Wall[3][2].IsTile() && p.Wall[4][3].IsTile()
+	default:
+		return false
+	}
+}

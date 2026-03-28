@@ -110,9 +110,16 @@ func main() {
 		if move.IsValid(&g, logger) {
 			g.HandleMove(move, logger)
 			g.AdvanceGame()
+			gm.Games[id] = g
 
 			// temporarily hardcoded cpu moves
-			g.MakeCpuMoves(logger)
+			//g.MakeCpuMoves(logger)
+			for g.State != game.WAITP1 && g.State != game.END {
+				g = gm.Games[id]
+				g.MakeRandomMove(logger)
+				g.AdvanceGame()
+				gm.Games[id] = g
+			}
 			//
 
 			w.Header().Set("Content-Type", "application/json")
@@ -125,8 +132,6 @@ func main() {
 			response := map[string]string{"message": "move not valid"}
 			json.NewEncoder(w).Encode(response)
 		}
-
-		gm.Games[id] = g
 
 	})
 

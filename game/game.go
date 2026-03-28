@@ -314,10 +314,6 @@ func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
 }
 
 func (g *Game) MakeCpuMoves(logger *slog.Logger) {
-	fmt.Println(g.AreAllTilesPlaced())
-	for g.State != WAITP1 && g.State != END {
-		g.MakeRandomMove(logger)
-		g.AdvanceGame()
-	}
+	//fmt.Println(g.AreAllTilesPlaced())
 
 }
