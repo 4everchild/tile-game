@@ -161,7 +161,6 @@ func (p *Player) IsWallColumnFull(c int) bool {
 func (p *Player) IsWallColorFull(c Color) bool {
 	switch c {
 	case BLUE:
-
 		return p.Wall[0][0].IsTile() && p.Wall[1][1].IsTile() && p.Wall[2][2].IsTile() && p.Wall[3][3].IsTile() && p.Wall[4][4].IsTile()
 	case YELLOW:
 		return p.Wall[0][1].IsTile() && p.Wall[1][2].IsTile() && p.Wall[2][3].IsTile() && p.Wall[3][4].IsTile() && p.Wall[4][0].IsTile()

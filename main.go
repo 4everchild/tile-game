@@ -67,13 +67,14 @@ func main() {
 
 	r.Post("/games", func(w http.ResponseWriter, r *http.Request) {
 		id := gm.CreateGame()
-		g := gm.Games[id]
+		g, err := gm.GetLatestGame(id)
+		check(err)
 
 		//
 
 		//
 
-		gm.Games[id] = g
+		gm.SetLatestGame(id, g)
 		fmt.Println("created game: ", id)
 		fmt.Println(unsafe.Sizeof(g))
 
@@ -87,7 +88,7 @@ func main() {
 		idStr := chi.URLParam(r, "ID")
 		id, _ := strconv.ParseUint(idStr, 10, 64)
 
-		g := gm.Games[id]
+		g, _ := gm.GetLatestGame(id)
 
 		err1 := tmpl.ExecuteTemplate(w, "game", g)
 		check(err1)
@@ -96,7 +97,7 @@ func main() {
 	r.Post("/games/{ID}/move", func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "ID")
 		id, _ := strconv.ParseUint(idStr, 10, 64)
-		g := gm.Games[id]
+		g, _ := gm.GetLatestGame(id)
 
 		var move game.Move
 
@@ -110,15 +111,15 @@ func main() {
 		if move.IsValid(&g, logger) {
 			g.HandleMove(move, logger)
 			g.AdvanceGame()
-			gm.Games[id] = g
+			gm.SetLatestGame(id, g)
 
 			// temporarily hardcoded cpu moves
 			//g.MakeCpuMoves(logger)
 			for g.State != game.WAITP1 && g.State != game.END {
-				g = gm.Games[id]
+				g, _ = gm.GetLatestGame(id)
 				g.MakeRandomMove(logger)
 				g.AdvanceGame()
-				gm.Games[id] = g
+				gm.SetLatestGame(id, g)
 			}
 			//
 
