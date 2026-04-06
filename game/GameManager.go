@@ -36,7 +36,6 @@ func (m *GameManager) CreateGame() uint64 {
 	m.History[id] = h
 
 	return id
-
 }
 
 func (m *GameManager) GetLatestGame(id uint64) (Game, error) {
@@ -54,6 +53,28 @@ func (m *GameManager) SetLatestGame(id uint64, g Game) error {
 
 	if ok {
 		h.States[len(h.States)-1] = g
+		return nil
+	} else {
+		return errors.New("id not found")
+	}
+}
+
+func (m *GameManager) GetLatestHistory(id uint64) (History, error) {
+	h, ok := m.History[id]
+
+	if ok {
+		return h, nil
+	} else {
+		return h, errors.New("id not found")
+	}
+}
+
+func (m *GameManager) Advance(id uint64, g Game, move Move) error {
+	h, ok := m.History[id]
+
+	if ok {
+		h.Add(g, move)
+		m.History[id] = h
 		return nil
 	} else {
 		return errors.New("id not found")

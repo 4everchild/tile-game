@@ -1,3 +1,30 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+.game-history {
+    display: flex;
+    flex-direction: column;
+
+    width:150px;
+    height: 50px;
+}
+
+.game-history-item {
+    border: 1px solid #333;
+    padding: 10px;
+}
+
+.game-history-item:has(+ .game-history-item ) {
+  border-bottom: none;  /* only separator lines */
+}
+
 .factory-display-container {
     display: flex;          /* arrange children in a row */
     flex-direction: row;    /* left-to-right layout */

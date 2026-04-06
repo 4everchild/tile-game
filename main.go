@@ -94,6 +94,31 @@ func main() {
 		check(err1)
 	})
 
+	r.Get("/games/{ID}/history", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "ID")
+		id, _ := strconv.ParseUint(idStr, 10, 64)
+
+		h, err := gm.GetLatestHistory(id)
+
+		fmt.Println(len(h.States))
+		fmt.Println(h.States)
+		fmt.Println(len(h.Moves))
+		fmt.Println(h.Moves)
+
+		//json.NewEncoder(os.Stdout).Encode(h)
+
+		if err != nil {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			response := map[string]string{"message": "id not found"}
+			json.NewEncoder(w).Encode(response)
+		} else {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(h)
+		}
+	})
+
 	r.Post("/games/{ID}/move", func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "ID")
 		id, _ := strconv.ParseUint(idStr, 10, 64)
@@ -111,15 +136,16 @@ func main() {
 		if move.IsValid(&g, logger) {
 			g.HandleMove(move, logger)
 			g.AdvanceGame()
-			gm.SetLatestGame(id, g)
+			gm.Advance(id, g, move)
+			//gm.SetLatestGame(id, g)
 
 			// temporarily hardcoded cpu moves
 			//g.MakeCpuMoves(logger)
 			for g.State != game.WAITP1 && g.State != game.END {
 				g, _ = gm.GetLatestGame(id)
-				g.MakeRandomMove(logger)
+				move = g.MakeRandomSensibleMove(logger)
 				g.AdvanceGame()
-				gm.SetLatestGame(id, g)
+				gm.Advance(id, g, move)
 			}
 			//
 

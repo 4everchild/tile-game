@@ -313,6 +313,33 @@ func (g *Game) ListAvailableMoves(p *Player, logger *slog.Logger) []Move {
 	return moves
 }
 
+func (g *Game) ListAvailablePlMoves(p *Player, logger *slog.Logger) []Move {
+	moves := make([]Move, 0)
+	var move Move
+	var group int
+	for group = 0; group < len(g.FactoryDisplays); group++ {
+		for color := BLUE; color < GREEN; color++ {
+			for row := 0; row < 5; row++ {
+				move = Move{uint8(group), color, uint8(row)}
+				if move.IsValid(g, logger) {
+					moves = append(moves, move)
+				}
+			}
+		}
+	}
+
+	for color := BLUE; color < FIRST; color++ {
+		for row := 0; row < 6; row++ {
+			move = Move{uint8(group), color, uint8(row)}
+			if move.IsValid(g, logger) {
+				moves = append(moves, move)
+			}
+		}
+	}
+
+	return moves
+}
+
 func (g *Game) MakeCpuMoves(logger *slog.Logger) {
 	//fmt.Println(g.AreAllTilesPlaced())
 }
