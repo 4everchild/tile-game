@@ -1,10 +1,5 @@
 package game
 
-import (
-	"errors"
-	"fmt"
-)
-
 type Patternline struct {
 	Size  uint8 `json:"size"`
 	Color Color `json:"color"`
@@ -15,33 +10,6 @@ type Player struct {
 	Wall        [5][5]Color    `json:"wall"`
 	Floorline   [7]Color       `json:"floorline"`
 	Points      uint8          `json:"points"`
-}
-
-func (p *Player) SetPatternline(index uint8, n uint8, c Color) error {
-	if n > index+1 {
-		errmsg := fmt.Sprintf("patternline [%d] was set at (%d) which is too much, player:\n%v\n", index, n, *p)
-		return errors.New(errmsg)
-	}
-	p.Patternline[index].Size = n
-	p.Patternline[index].Color = c
-	return nil
-}
-
-// todo remove color from signature and force correct color in the wall
-func (p *Player) PlaceTileWall(i, j uint8) {
-	switch p.Wall[i][j] {
-	case OPAQUE_BLUE:
-		p.Wall[i][j] = BLUE
-	case OPAQUE_BLACK:
-		p.Wall[i][j] = BLACK
-	case OPAQUE_RED:
-		p.Wall[i][j] = RED
-	case OPAQUE_YELLOW:
-		p.Wall[i][j] = YELLOW
-	case OPAQUE_GREEN:
-		p.Wall[i][j] = GREEN
-	}
-
 }
 
 func (p *Player) CountPoints(y, x uint8) {

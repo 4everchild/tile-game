@@ -49,16 +49,14 @@ export function refresh(gameroot,obj){
     console.log(player)
     addPlayerEvents(player)
 
-    wraphHstoryFetch()
+    //wraphHstoryFetch()
 
 }
 
 async function wraphHstoryFetch(){
     try {
-        const response = await fetch(url+'/history', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await fetch(url+'/history');
+
 
         if (!response.ok) throw new Error('Server error');
 

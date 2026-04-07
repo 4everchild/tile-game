@@ -57,6 +57,7 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
+	r.Use(middleware.Compress(5))
 
 	fs_static := http.FileServer(http.Dir("./frontend/static"))
 	r.Handle("/static/*", http.StripPrefix("/static", fs_static))
@@ -100,10 +101,10 @@ func main() {
 
 		h, err := gm.GetLatestHistory(id)
 
-		fmt.Println(len(h.States))
-		fmt.Println(h.States)
-		fmt.Println(len(h.Moves))
-		fmt.Println(h.Moves)
+		//fmt.Println(len(h.States))
+		//fmt.Println(h.States)
+		//fmt.Println(len(h.Moves))
+		//fmt.Println(h.Moves)
 
 		//json.NewEncoder(os.Stdout).Encode(h)
 
