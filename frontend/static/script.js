@@ -1,6 +1,6 @@
 import {render} from "./render.js"
-import { makeDiv, addDiv } from "./utils.js"
 import {setSelected,getSelected, addHandlersToDraw, addPlayerEvents } from "./events.js";
+import { renderHistory } from "./renderHistory.js";
 
 
 
@@ -12,6 +12,7 @@ export const nPlayers = gameobj.players.length
 export const url = window.location.href
 
 export const gameroot = document.querySelector(".game-container")
+export const historyroot = document.querySelector(".history-container")
 
 function getActivePlayer(root){
     const state = root.querySelector(".state")
@@ -25,18 +26,14 @@ function getActivePlayer(root){
 
 //hover and selected functionality to generate input move
 
-refresh(gameroot,gameobj)
-
-
-
-
+await refresh(gameroot, historyroot)
 
 
 
 
 //function addDrawEventListeners
 
-export function refresh(gameroot,obj){
+export  async function refreshGame(gameroot,obj){
     setSelected(null)
     //fragment = document.createDocumentFragment();
     //addGame(fragment,obj)
@@ -48,22 +45,35 @@ export function refresh(gameroot,obj){
     const player = getActivePlayer(gameroot)
     console.log(player)
     addPlayerEvents(player)
-
-    //wraphHstoryFetch()
+    /*
+    let res = await fetchHistory()
+    if (res) {
+        console.log('Success:', res);
+        refreshHistory(historyroot, res)
+    }
+    */
 
 }
 
-async function wraphHstoryFetch(){
+export async function refresh(gameroot, historyroot){
+    let history = await fetchHistory()
+    let game = history.States.at(-1)
+    await refreshGame(gameroot,game)
+    await refreshHistory(historyroot,history)
+}
+
+function refreshHistory(historyroot,history){
+    const fragment = renderHistory(history)
+    historyroot.replaceChildren(fragment)
+}
+
+
+async function fetchHistory(){
     try {
         const response = await fetch(url+'/history');
-
-
         if (!response.ok) throw new Error('Server error');
-
         const result = await response.json();
-        //refresh(gameroot,result)
-        console.log('Success:', result);
-
+        return result
     } catch (err) {
         console.error('Request failed:', err);
     }

@@ -7,8 +7,13 @@
     height: fit-content;
 }
 
+.main-container{
+    display: flex;
+    flex-direction: row;
+}
 
-.game-history {
+
+.history-container {
     display: flex;
     flex-direction: column;
 
@@ -19,6 +24,7 @@
 .game-history-item {
     border: 1px solid #333;
     padding: 10px;
+    text-align: center;
 }
 
 .game-history-item:has(+ .game-history-item ) {

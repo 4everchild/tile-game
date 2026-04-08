@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"unsafe"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -77,7 +76,7 @@ func main() {
 
 		gm.SetLatestGame(id, g)
 		fmt.Println("created game: ", id)
-		fmt.Println(unsafe.Sizeof(g))
+		//fmt.Println(unsafe.Sizeof(g))
 
 		url := fmt.Sprintf("/games/%d", id)
 

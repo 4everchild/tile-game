@@ -1,5 +1,5 @@
 export {getSelected, setSelected, addHandlersToDraw, addPlayerEvents}
-import { nPlayers, url, refresh, gameroot } from "./script.js"
+import { nPlayers, url, refreshGame, gameroot, refresh, historyroot } from "./script.js"
 
 import { colorValue } from "./utils.js"
 let selected
@@ -129,9 +129,7 @@ function addFloorEvents(floor){
                 });
 
                 if (!response.ok) throw new Error('Server error');
-
-                const result = await response.json();
-                refresh(gameroot,result)
+                refresh(gameroot,historyroot)
 
             } catch (err) {
                 console.error('Request failed:', err);
@@ -156,10 +154,7 @@ function addPatternlinesEvents(pl,wallTiles){
                 });
 
                 if (!response.ok) throw new Error('Server error');
-
-                const result = await response.json();
-                refresh(gameroot,result)
-                console.log('Success:', result);
+                refresh(gameroot,historyroot)
 
             } catch (err) {
                 console.error('Request failed:', err);
