@@ -1,7 +1,7 @@
 import {render} from "./render.js"
 import {setSelected,getSelected, addHandlersToDraw, addPlayerEvents } from "./events.js";
 import { renderHistory } from "./renderHistory.js";
-
+import { addHistoryEvents } from "./historyEvents.js";
 
 
 const data = document.getElementById("game-data").textContent.trim(); 
@@ -35,24 +35,15 @@ await refresh(gameroot, historyroot)
 
 export  async function refreshGame(gameroot,obj){
     setSelected(null)
-    //fragment = document.createDocumentFragment();
-    //addGame(fragment,obj)
     const fragment = render(obj)
     gameroot.replaceChildren(fragment)
+}
 
+export function addGameHandlers(gameroot){
     addHandlersToDraw(gameroot)
-    
     const player = getActivePlayer(gameroot)
     console.log(player)
     addPlayerEvents(player)
-    /*
-    let res = await fetchHistory()
-    if (res) {
-        console.log('Success:', res);
-        refreshHistory(historyroot, res)
-    }
-    */
-
 }
 
 export async function refresh(gameroot, historyroot){
@@ -60,6 +51,8 @@ export async function refresh(gameroot, historyroot){
     let game = history.States.at(-1)
     await refreshGame(gameroot,game)
     await refreshHistory(historyroot,history)
+    addGameHandlers(gameroot)
+    addHistoryEvents(historyroot)
 }
 
 function refreshHistory(historyroot,history){

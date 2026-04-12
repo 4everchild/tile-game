@@ -265,4 +265,3 @@ function addDrawingContainerEvents(dc,total){
         resetSelected(total)
     })
 }
-
