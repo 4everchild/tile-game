@@ -17,8 +17,13 @@
     display: flex;
     flex-direction: column;
 
+    border: 1px solid #333;
+
+    padding: 15px;
+    gap: 15px;
+
     width:150px;
-    height: 50px;
+    height: fit-content; 
 }
 
 .game-history-item {
@@ -26,10 +31,11 @@
     padding: 10px;
     text-align: center;
 }
-
+/*
 .game-history-item:has(+ .game-history-item ) {
-  border-bottom: none;  /* only separator lines */
+  border-bottom: none;
 }
+*/
 
 .factory-display-container {
     display: flex;          /* arrange children in a row */
@@ -319,10 +325,10 @@
   }
 }
 
-.tile.BLINK {
+.BLINK {
   animation: pulse 0.8s ease-in-out infinite;
 }
 
-.tile.SELECTED {
+.SELECTED {
   animation: pulse 0.8s ease-in-out infinite;
 }
