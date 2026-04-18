@@ -14,6 +14,8 @@ export const url = window.location.href
 export const gameroot = document.querySelector(".game-container")
 export const historyroot = document.querySelector(".history-container")
 
+export let history = null
+
 function getActivePlayer(root){
     const state = root.querySelector(".state")
     console.log(state)
@@ -47,7 +49,7 @@ export function addGameHandlers(gameroot){
 }
 
 export async function refresh(gameroot, historyroot){
-    let history = await fetchHistory()
+    history = await fetchHistory()
     let game = history.States.at(-1)
     await refreshGame(gameroot,game)
     await refreshHistory(historyroot,history)
