@@ -26,12 +26,14 @@ function addHistoryEvent(his,l){
 
     his.addEventListener ("click",(e) =>{
         e.stopPropagation()
-        if(selected){selected.classList.remove("SELECTED")}
-        if(selected == his){
-            his.classList.remove("SELECTED")
-            selected=null
+        if(selected){
+            if(selected != his){
+                selected.classList.remove("SELECTED")
+                his.classList.remove("BLINK")
+                his.classList.add("SELECTED")
+                selected = his
+            }
         }else{
-            his.classList.remove("BLINK")
             his.classList.add("SELECTED")
             selected = his
         }

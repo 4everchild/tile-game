@@ -325,10 +325,20 @@
   }
 }
 
-.BLINK {
+.tile.BLINK {
   animation: pulse 0.8s ease-in-out infinite;
 }
 
-.SELECTED {
+.tile.SELECTED {
   animation: pulse 0.8s ease-in-out infinite;
+}
+
+.game-history-item.BLINK {
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.game-history-item.SELECTED {
+  animation: pulse 0.8s ease-in-out infinite;
+  background-color: yellow;
+  opacity: 40%;
 }
