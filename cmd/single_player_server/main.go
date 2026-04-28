@@ -1,7 +1,7 @@
 package main
 
 import (
-	"azul/game"
+	"azul/internal/game"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -49,7 +49,7 @@ func main() {
 
 	tmpl := template.Must(template.New("game").
 		ParseFiles(
-			"frontend/templates/game.html",
+			"internal/frontend/templates/game.html",
 		))
 	//fmt.Println(g.state)
 
@@ -58,11 +58,11 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Compress(5))
 
-	fs_static := http.FileServer(http.Dir("./frontend/static"))
+	fs_static := http.FileServer(http.Dir("./internal/frontend/static"))
 	r.Handle("/static/*", http.StripPrefix("/static", fs_static))
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./frontend/home/index.html")
+		http.ServeFile(w, r, "./internal/frontend/home/index.html")
 	})
 
 	r.Post("/games", func(w http.ResponseWriter, r *http.Request) {

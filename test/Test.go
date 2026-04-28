@@ -1,7 +1,7 @@
 package test
 
 import (
-	"azul/game"
+	"azul/internal/game"
 	"fmt"
 	"sort"
 )
