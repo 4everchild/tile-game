@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"tile-game/internal/compression"
 	"tile-game/internal/game"
 
 	"github.com/go-chi/chi/v5"
@@ -112,11 +113,29 @@ func main() {
 			w.WriteHeader(http.StatusBadRequest)
 			response := map[string]string{"message": "id not found"}
 			json.NewEncoder(w).Encode(response)
-		} else {
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(h)
+			return
 		}
+		/*
+			// no space for dictionary
+			if len(h.States) == 0 {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				json.NewEncoder(w).Encode(h)
+				return
+			}
+		*/
+		// compression available
+		if len(h.States) > 1 {
+			compression.CompressUsingDictionary(h, len(h.States))
+		} else {
+			compression.CompressUsingDictionary(h, 0)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		//w.Header().Set("Content-Encoding", "deflate")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(h)
+		return
+
 	})
 
 	r.Post("/games/{ID}/move", func(w http.ResponseWriter, r *http.Request) {
