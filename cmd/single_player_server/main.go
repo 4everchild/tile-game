@@ -1,7 +1,6 @@
 package main
 
 import (
-	"azul/internal/game"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -10,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"tile-game/internal/game"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

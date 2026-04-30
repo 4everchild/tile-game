@@ -1,4 +1,4 @@
-module azul
+module tile-game
 
 go 1.26.2
 

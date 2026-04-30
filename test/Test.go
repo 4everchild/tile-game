@@ -1,9 +1,9 @@
 package test
 
 import (
-	"azul/internal/game"
 	"fmt"
 	"sort"
+	"tile-game/internal/game"
 )
 
 func TestXS64() {
